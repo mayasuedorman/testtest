@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Ride List</title>
+    <link rel="icon" href="images/logo.png">
+    <link rel="stylesheet" href="styles/style.css">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Font Awesome CSS for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- jQuery UI CSS for draggable modals -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css">
+</head>
+
+<body>
+    <!-- Link to main stylesheet -->
+<link rel="stylesheet" href="styles/style.css?v=1715045164">
+
+<nav class="navbar navbar-light bg-light justify-content-between">
+    <a class="navbar-brand">
+        <img src="images/logo.png" width="40" height="40" alt="logo">
+    </a>
+    </nav>    <div class="ride-table-container">
+        <div class="d-flex justify-content-between align-items-center my-3">
+            <h1 class="col">Ride Lists</h1>
+            <button class="btn btn-primary add">Add Ride</button>
+        </div>
+
+        <table id="ridesTable" class="table table-striped">
+            <!-- Table Header -->
+            <thead>
+                <tr>
+                    <th scope="col">Park</th>
+                    <th scope="col">Number</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Category</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Physical Requirement</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Table Body -->
+                <tr><td>1</td><td>101</td><td>Silver Star Carousel</td><td>Family</td><td>Low speed antique Carousel</td><td>Do not ride if you have any of the following conditions: recent surgery or illness, heart conditions, neck, back, or bone ailments, pregnancy, high blood pressure or aneurysms, or are under the influence of drugs or alcohol. All riders must be able to sit properly (facing forward, sitting upright, flat in the seat with their hands and legs inside the ride), use all restraining devices, and stabilize themselves throughout the entire ride cycle in order to ride. Expectant mothers and lap childrenar e only permitted when riding in a chariot.</td><td>
+                        <div class='d-flex'>
+                        <a href='#editRideModal' class='btn btn-primary mr-2 edit-btn' data-toggle='modal' data-ride-id='101' data-ride-name='Silver Star Carousel' data-ride-category='Family' data-ride-info='Low speed antique Carousel' data-physical-requirement='Do not ride if you have any of the following conditions: recent surgery or illness, heart conditions, neck, back, or bone ailments, pregnancy, high blood pressure or aneurysms, or are under the influence of drugs or alcohol. All riders must be able to sit properly (facing forward, sitting upright, flat in the seat with their hands and legs inside the ride), use all restraining devices, and stabilize themselves throughout the entire ride cycle in order to ride. Expectant mothers and lap childrenar e only permitted when riding in a chariot.'><i class='fas fa-edit'></i></a>
+                        <a href='#deleteConfirmationModal' class='btn btn-danger delete-btn' data-toggle='modal' data-ride-id='101'><i class='fas fa-trash'></i></a>
+                        </div>
+                    </td><tr><td>1</td><td>113</td><td>La Vibora</td><td>Thrill</td><td>Olympic bobsled simulation with medium side to side motion and mild up & down hills.</td><td>Do not ride if you have any of the following conditions: recent surgery or illness, heart conditions, neck, back, or bone ailments, pregnancy, high blood pressure or aneurysms, or are under the influence of drugs or alcohol. All passenger restraints, including lap bars and seat belts, must be fastened properly to allow guest to ride. Due to the restraints some large guests may not be able to ride. Riders with arm casts must be seated with the cast toward the outside of the ride. All riders must be able to sit properly (facing forward, sitting upright, flat in the seat with their hands and legs inside the ride), use all restraining devices, and stabilize themselves throughout the entire ride cycle in order to ride.</td><td>
+                        <div class='d-flex'>
+                        <a href='#editRideModal' class='btn btn-primary mr-2 edit-btn' data-toggle='modal' data-ride-id='113' data-ride-name='La Vibora' data-ride-category='Thrill' data-ride-info='Olympic bobsled simulation with medium side to side motion and mild up & down hills.' data-physical-requirement='Do not ride if you have any of the following conditions: recent surgery or illness, heart conditions, neck, back, or bone ailments, pregnancy, high blood pressure or aneurysms, or are under the influence of drugs or alcohol. All passenger restraints, including lap bars and seat belts, must be fastened properly to allow guest to ride. Due to the restraints some large guests may not be able to ride. Riders with arm casts must be seated with the cast toward the outside of the ride. All riders must be able to sit properly (facing forward, sitting upright, flat in the seat with their hands and legs inside the ride), use all restraining devices, and stabilize themselves throughout the entire ride cycle in order to ride.'><i class='fas fa-edit'></i></a>
+                        <a href='#deleteConfirmationModal' class='btn btn-danger delete-btn' data-toggle='modal' data-ride-id='113'><i class='fas fa-trash'></i></a>
+                        </div>
+                    </td><tr><td>1</td><td>225</td><td>Six Flags Railroad</td><td>Family</td><td>Slow moving, sit down visual tour of the park.</td><td>Do not ride if you have any of the following conditions: recent surgery or illness, heart conditions, neck, back, or bone ailments, pregnancy, high blood pressure or aneurysms, or are under the influence of drugs or alcohol. All riders must be able to sit properly (facing forward, sitting upright, flat in the seat with their hands and legs inside the ride), use all restraining devices, and stabilize themselves throughout the entire ride cycle in order to ride.</td><td>
+                        <div class='d-flex'>
+                        <a href='#editRideModal' class='btn btn-primary mr-2 edit-btn' data-toggle='modal' data-ride-id='225' data-ride-name='Six Flags Railroad' data-ride-category='Family' data-ride-info='Slow moving, sit down visual tour of the park.' data-physical-requirement='Do not ride if you have any of the following conditions: recent surgery or illness, heart conditions, neck, back, or bone ailments, pregnancy, high blood pressure or aneurysms, or are under the influence of drugs or alcohol. All riders must be able to sit properly (facing forward, sitting upright, flat in the seat with their hands and legs inside the ride), use all restraining devices, and stabilize themselves throughout the entire ride cycle in order to ride.'><i class='fas fa-edit'></i></a>
+                        <a href='#deleteConfirmationModal' class='btn btn-danger delete-btn' data-toggle='modal' data-ride-id='225'><i class='fas fa-trash'></i></a>
+                        </div>
+                    </td><tr><td>1</td><td>230</td><td>Titan</td><td>Thrill</td><td>An exciting roller coaster with high speeds, steep drops, and fast turns.</td><td>Do not ride if you have any of the following conditions: recent surgery or illness, heart conditions, neck, back, or bone ailments, pregnancy, high blood pressure or aneurysms, or are under the influence of drugs or alcohol. All passenger restraints, including lap bars and seat belts, must be fastened properly to allow guest to ride. There may not be more than a 4¼ inch gap between the lap bar and the side of the car.  Due to the restraints some large guests may not be able to ride. Riders with arm casts must be seated with the cast toward the outside of the ride. All riders must be able to sit properly (facing forward, sitting upright, flat in the seat with their hands and legs inside the ride), use all restraining devices, and stabilize themselves throughout the entire ride cycle in order to ride.</td><td>
+                        <div class='d-flex'>
+                        <a href='#editRideModal' class='btn btn-primary mr-2 edit-btn' data-toggle='modal' data-ride-id='230' data-ride-name='Titan' data-ride-category='Thrill' data-ride-info='An exciting roller coaster with high speeds, steep drops, and fast turns.' data-physical-requirement='Do not ride if you have any of the following conditions: recent surgery or illness, heart conditions, neck, back, or bone ailments, pregnancy, high blood pressure or aneurysms, or are under the influence of drugs or alcohol. All passenger restraints, including lap bars and seat belts, must be fastened properly to allow guest to ride. There may not be more than a 4¼ inch gap between the lap bar and the side of the car.  Due to the restraints some large guests may not be able to ride. Riders with arm casts must be seated with the cast toward the outside of the ride. All riders must be able to sit properly (facing forward, sitting upright, flat in the seat with their hands and legs inside the ride), use all restraining devices, and stabilize themselves throughout the entire ride cycle in order to ride.'><i class='fas fa-edit'></i></a>
+                        <a href='#deleteConfirmationModal' class='btn btn-danger delete-btn' data-toggle='modal' data-ride-id='230'><i class='fas fa-trash'></i></a>
+                        </div>
+                    </td><tr><td>1</td><td>306</td><td>Six Flags Speedway (Go Karts)</td><td>Family</td><td>Racecar simulation. Heavy side to side forces, minor bumping</td><td>Drivers must exhibit sufficient visual acuity to operate the car safely. Drivers and passengers must maintain an upright seated position with their back against the seatback at all times during the ride durations. hands, hands, legs, and feet must remain inside the go kart at all times. Drivers and passengers must have the ability to step up and down into the ride vehicle or have the ability to transfer from a wheelchair to the go kart.</td><td>
+                        <div class='d-flex'>
+                        <a href='#editRideModal' class='btn btn-primary mr-2 edit-btn' data-toggle='modal' data-ride-id='306' data-ride-name='Six Flags Speedway (Go Karts)' data-ride-category='Family' data-ride-info='Racecar simulation. Heavy side to side forces, minor bumping' data-physical-requirement='Drivers must exhibit sufficient visual acuity to operate the car safely. Drivers and passengers must maintain an upright seated position with their back against the seatback at all times during the ride durations. hands, hands, legs, and feet must remain inside the go kart at all times. Drivers and passengers must have the ability to step up and down into the ride vehicle or have the ability to transfer from a wheelchair to the go kart.'><i class='fas fa-edit'></i></a>
+                        <a href='#deleteConfirmationModal' class='btn btn-danger delete-btn' data-toggle='modal' data-ride-id='306'><i class='fas fa-trash'></i></a>
+                        </div>
+                    </td><tr><td>1</td><td>307</td><td>Shock Wave</td><td>Thrill</td><td>An exciting roller coaster with high speeds, steep drops, fast turns,and loops.</td><td>Do not ride if you have any of the following conditions: recent surgery or illness, heart conditions, neck, back, or bone ailments, pregnancy, high blood pressure or aneurysms, or are under the influence of drugs or alcohol. All passenger restraints, including lap bars and seat belts, must be fastened properly to allow guest to ride. Due to the restraints some large guests may not be able to ride. Riders with arm casts must be seated with the cast toward the outside of the ride. All riders must be able to sit properly (facing forward, sitting upright, flat in the seat with their hands and legs inside the ride), use all restraining devices, and stabilize themselves throughout the entire ride cycle in order to ride.</td><td>
+                        <div class='d-flex'>
+                        <a href='#editRideModal' class='btn btn-primary mr-2 edit-btn' data-toggle='modal' data-ride-id='307' data-ride-name='Shock Wave' data-ride-category='Thrill' data-ride-info='An exciting roller coaster with high speeds, steep drops, fast turns,and loops.' data-physical-requirement='Do not ride if you have any of the following conditions: recent surgery or illness, heart conditions, neck, back, or bone ailments, pregnancy, high blood pressure or aneurysms, or are under the influence of drugs or alcohol. All passenger restraints, including lap bars and seat belts, must be fastened properly to allow guest to ride. Due to the restraints some large guests may not be able to ride. Riders with arm casts must be seated with the cast toward the outside of the ride. All riders must be able to sit properly (facing forward, sitting upright, flat in the seat with their hands and legs inside the ride), use all restraining devices, and stabilize themselves throughout the entire ride cycle in order to ride.'><i class='fas fa-edit'></i></a>
+                        <a href='#deleteConfirmationModal' class='btn btn-danger delete-btn' data-toggle='modal' data-ride-id='307'><i class='fas fa-trash'></i></a>
+                        </div>
+                    </td><tr><td>1</td><td>310</td><td>Superman: Tower of Power</td><td>Thrill</td><td>An exciting ride with sudden vertical acceleration and a sudden vertical drop.</td><td>Do not ride if you have any of the following conditions: recent surgery or illness, heart conditions, neck, back, or bone ailments, pregnancy, high blood pressure or aneurysms, or are under the influence of drugs or alcohol. All passenger restraints, including lap bars and seat belts, must be fastened properly to allow guest to ride. Due to the restraints some large guests may not be able to ride. Riders with arm casts must be seated with the cast toward the outside of the ride. All riders must be able to sit properly (facing forward, sitting upright, flat in the seat with their hands and legs inside the ride), use all restraining devices, and stabilize themselves throughout the entire ride cycle in order to ride.</td><td>
+                        <div class='d-flex'>
+                        <a href='#editRideModal' class='btn btn-primary mr-2 edit-btn' data-toggle='modal' data-ride-id='310' data-ride-name='Superman: Tower of Power' data-ride-category='Thrill' data-ride-info='An exciting ride with sudden vertical acceleration and a sudden vertical drop.' data-physical-requirement='Do not ride if you have any of the following conditions: recent surgery or illness, heart conditions, neck, back, or bone ailments, pregnancy, high blood pressure or aneurysms, or are under the influence of drugs or alcohol. All passenger restraints, including lap bars and seat belts, must be fastened properly to allow guest to ride. Due to the restraints some large guests may not be able to ride. Riders with arm casts must be seated with the cast toward the outside of the ride. All riders must be able to sit properly (facing forward, sitting upright, flat in the seat with their hands and legs inside the ride), use all restraining devices, and stabilize themselves throughout the entire ride cycle in order to ride.'><i class='fas fa-edit'></i></a>
+                        <a href='#deleteConfirmationModal' class='btn btn-danger delete-btn' data-toggle='modal' data-ride-id='310'><i class='fas fa-trash'></i></a>
+                        </div>
+                    </td><tr><td>1</td><td>415</td><td>Bugs Bunny Cloud Bouncer</td><td>Kids</td><td>A child"s ride with elevation and short drops.</td><td>Do not ride if you have any of the following conditions: recent surgery or illness, heart conditions, neck, back, or bone ailments, pregnancy, high blood pressure or aneurysms, or are under the influence of drugs or alcohol. All passenger restraints, including lap bars and seat belts, must be fastened properly to allow guest to ride. No leg casts. Due to the restraints some large guests may not be able to ride. Riders with arm casts must be seated with the cast toward the outside of the ride. All riders must be able to sit properly (facing forward, sitting upright, flat in the seat with their hands and legs inside the ride), use all restraining devices, and stabilize themselves throughout the entire ride cycle in order to ride.</td><td>
+                        <div class='d-flex'>
+                        <a href='#editRideModal' class='btn btn-primary mr-2 edit-btn' data-toggle='modal' data-ride-id='415' data-ride-name='Bugs Bunny Cloud Bouncer' data-ride-category='Kids' data-ride-info='A child"s ride with elevation and short drops.' data-physical-requirement='Do not ride if you have any of the following conditions: recent surgery or illness, heart conditions, neck, back, or bone ailments, pregnancy, high blood pressure or aneurysms, or are under the influence of drugs or alcohol. All passenger restraints, including lap bars and seat belts, must be fastened properly to allow guest to ride. No leg casts. Due to the restraints some large guests may not be able to ride. Riders with arm casts must be seated with the cast toward the outside of the ride. All riders must be able to sit properly (facing forward, sitting upright, flat in the seat with their hands and legs inside the ride), use all restraining devices, and stabilize themselves throughout the entire ride cycle in order to ride.'><i class='fas fa-edit'></i></a>
+                        <a href='#deleteConfirmationModal' class='btn btn-danger delete-btn' data-toggle='modal' data-ride-id='415'><i class='fas fa-trash'></i></a>
+                        </div>
+                    </td><tr><td>1</td><td>416</td><td>Taz Tornado Swings</td><td>Kids</td><td>A gentle circular ride.</td><td>Do not ride if you have any of the following conditions: recent surgery or illness, heart conditions, neck, back, or bone ailments, pregnancy, high blood pressure or aneurysms, or are under the influence of drugs or alcohol. Riders with arm casts must be seated with the cast toward the outside of the ride. All riders must be able to sit properly (facing forward, sitting upright, flat in the seat with their hands and legs inside the ride), use all restraining devices, and stabilize themselves throughout the entire ride cycle in order to ride. Lap children are not permitted. 275 pound maximum combined weight per swing.</td><td>
+                        <div class='d-flex'>
+                        <a href='#editRideModal' class='btn btn-primary mr-2 edit-btn' data-toggle='modal' data-ride-id='416' data-ride-name='Taz Tornado Swings' data-ride-category='Kids' data-ride-info='A gentle circular ride.' data-physical-requirement='Do not ride if you have any of the following conditions: recent surgery or illness, heart conditions, neck, back, or bone ailments, pregnancy, high blood pressure or aneurysms, or are under the influence of drugs or alcohol. Riders with arm casts must be seated with the cast toward the outside of the ride. All riders must be able to sit properly (facing forward, sitting upright, flat in the seat with their hands and legs inside the ride), use all restraining devices, and stabilize themselves throughout the entire ride cycle in order to ride. Lap children are not permitted. 275 pound maximum combined weight per swing.'><i class='fas fa-edit'></i></a>
+                        <a href='#deleteConfirmationModal' class='btn btn-danger delete-btn' data-toggle='modal' data-ride-id='416'><i class='fas fa-trash'></i></a>
+                        </div>
+                    </td><tr><td>1</td><td>418</td><td>Justice league Battle for Metropolis</td><td>Thrill</td><td>An interactive dark ride with turns and spins</td><td>Do not ride if you have any of the following conditions: recent surgery or illness, heart conditions, neck, back, or bone ailments, pregnancy, high blood pressure or aneurysms, or are under the influence of drugs or alcohol. Lap seating is not permitted. All passenger restraints, including lap bars and seat belts, must be fastened properly to allow guest to ride. Due to the restraints some large guests may not be able to ride. Riders with arm casts must be seated with the cast toward the outside of the ride. All riders must be able to sit properly (facing forward, sitting upright, flat in the seat with their hands and legs inside the ride), use all restraining devices, and stabilize themselves throughout the entire ride cycle in order to ride. Strobe lights are in use.</td><td>
+                        <div class='d-flex'>
+                        <a href='#editRideModal' class='btn btn-primary mr-2 edit-btn' data-toggle='modal' data-ride-id='418' data-ride-name='Justice league Battle for Metropolis' data-ride-category='Thrill' data-ride-info='An interactive dark ride with turns and spins' data-physical-requirement='Do not ride if you have any of the following conditions: recent surgery or illness, heart conditions, neck, back, or bone ailments, pregnancy, high blood pressure or aneurysms, or are under the influence of drugs or alcohol. Lap seating is not permitted. All passenger restraints, including lap bars and seat belts, must be fastened properly to allow guest to ride. Due to the restraints some large guests may not be able to ride. Riders with arm casts must be seated with the cast toward the outside of the ride. All riders must be able to sit properly (facing forward, sitting upright, flat in the seat with their hands and legs inside the ride), use all restraining devices, and stabilize themselves throughout the entire ride cycle in order to ride. Strobe lights are in use.'><i class='fas fa-edit'></i></a>
+                        <a href='#deleteConfirmationModal' class='btn btn-danger delete-btn' data-toggle='modal' data-ride-id='418'><i class='fas fa-trash'></i></a>
+                        </div>
+                    </td>            </tbody>
+        </table>
+
+        <ul class="pagination justify-content-center">
+            <li class='page-item'><a class='page-link' href='?page=1&rows=10'>1</a></li><li class='page-item'><a class='page-link' href='?page=2&rows=10'>2</a></li>        </ul>
+    </div>
+
+    <!-- Add Ride Modal -->
+    <div class="modal fade" id="addRideModal" tabindex="-1" role="dialog" aria-labelledby="addRideModalLabel"
+        aria-hidden="true">
+        <!-- Modal content for adding a ride goes here -->
+        <div class="modal-dialog draggable" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addRideModalLabel">Add Ride</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="addRideForm" method="post">
+                        <div class="form-group">
+                            <label for="ride_id">Ride Number</label>
+                            <input type="number" class="form-control" id="ride_id" name="ride_id" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="rideName">Ride Name</label>
+                            <input type="text" class="form-control" id="rideName" name="rideName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="rideCategory">Category</label>
+                            <input type="text" class="form-control" id="rideCategory" name="rideCategory" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="ride_info">Description</label>
+                            <input type="text" class="form-control" id="ride_info" name="ride_info" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="physical_requirement">Physical Requirement</label>
+                            <textarea class="form-control" id="physical_requirement" name="physical_requirement"
+                                rows="5" required></textarea>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Next</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Accessibility Information Modal -->
+    <div class="modal fade" id="addAccessibilityModal" tabindex="-1" role="dialog"
+        aria-labelledby="addAccessibilityModalLabel" aria-hidden="true">
+        <div class="modal-dialog draggable" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addAccessibilityModalLabel">Add Accessibility</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="addAccessibilityForm" method="post">
+                        <div class="form-group">
+                            <label for="touch">Touch</label>
+                            <input type="number" class="form-control" id="touch" name="touch" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="taste">Taste</label>
+                            <input type="number" class="form-control" id="taste" name="taste" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="touch">Smell</label>
+                            <input type="number" class="form-control" id="smell" name="smell" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="sight">Sight</label>
+                            <input type="number" class="form-control" id="sight" name="sight" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="sound">Sound</label>
+                            <input type="number" class="form-control" id="sound" name="sound" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="pregnancy">Pregnancy</label>
+                            <select class="form-control" id="pregnancy" name="pregnancy">
+                                <option value="1">Yes</option>
+                                <option value="0">No</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="motion">Motion Sickness</label>
+                            <select class="form-control" id="motion" name="motion">
+                                <option value="1">Yes</option>
+                                <option value="0" selected>No</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="arms">Arms</label>
+                            <select class="form-control" id="arms" name="arms">
+                                <option value="0">0</option>
+                                <option value="1">1</option>
+                                <option value="2" selected>2</option> <!-- Default selected -->
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="legs">Legs</label>
+                            <select class="form-control" id="legs" name="legs">
+                                <option value="0">0</option>
+                                <option value="1">1</option>
+                                <option value="2" selected>2</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="blood_pressure">High Blood Pressure</label>
+                            <select class="form-control" id="blood_pressure" name="blood_pressure">
+                                <option value="1">Yes</option>
+                                <option value="0" selected>No</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="flashing_light">Flashing Light</label>
+                            <select class="form-control" id="flashing_light" name="flashing_light">
+                                <option value="1">Yes</option>
+                                <option value="0" selected>No</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="loud_noises">Loud Noises</label>
+                            <select class="form-control" id="loud_noises" name="loud_noises">
+                                <option value="1">Yes</option>
+                                <option value="0" selected>No</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="intense_visual">Intense Visual</label>
+                            <select class="form-control" id="intense_visual" name="intense_visual">
+                                <option value="1">Yes</option>
+                                <option value="0" selected>No</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="wheelchair">Wheelchair</label>
+                            <select class="form-control" id="wheelchair" name="wheelchair">
+                                <option value="1">Yes</option>
+                                <option value="0" selected>No</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="heart_disease">Heart Disease</label>
+                            <select class="form-control" id="heart_disease" name="heart_disease">
+                                <option value="1">Yes</option>
+                                <option value="0" selected>No</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="intensity">Intensity</label>
+                            <input type="text" class="form-control" id="intensity" name="intensity" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="max_weight">Maximum Weight (in lbs)</label>
+                            <input type="text" class="form-control" id="max_weight" name="max_weight" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="min_weight">Minimum Weight (in lbs)</label>
+                            <input type="number" class="form-control" id="min_weight" name="min_weight" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="max_height">Maximum Height (in inches)</label>
+                            <input type="number" class="form-control" id="max_height" name="max_height" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="min_height">Minumum Height (in inches)</label>
+                            <input type="number" class="form-control" id="min_height" name="min_height" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="visual">Vision Required</label>
+                            <select class="form-control" id="visual" name="visual">
+                                <option value="1">Yes</option>
+                                <option value="0" selected>No</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="hearing">Hearing Required</label>
+                            <select class="form-control" id="hearing" name="hearing">
+                                <option value="1">Yes</option>
+                                <option value="0" selected>No</option>
+                            </select>
+                        </div>
+                        <input type="hidden" id="ride_id" name="ride_id">
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger showFirstModal" data-dismiss="modal">Cancel</button>
+                    <button type="submit" form="addAccessibilityForm" class="btn btn-primary showFirstModal">Add
+                        Accessibility</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Edit Ride Modal -->
+    <div class="modal fade" id="editRideModal" tabindex="-1" role="dialog" aria-labelledby="editRideModalLabel"
+        aria-hidden="true">
+        <!-- Modal content for editing a ride goes here -->
+        <div class="modal-dialog draggable" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editRideModalLabel">Edit Ride Information</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="editRide.php" method="post">
+                        <div class="form-group">
+
+                            <label for="ride_id">Ride Number</label>
+                            <input type="number" class="form-control" id="ride_id" name="ride_id" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="rideName">Ride Name</label>
+                            <input type="text" class="form-control" id="rideName" name="rideName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="rideCategory">Category</label>
+                            <input type="text" class="form-control" id="rideCategory" name="rideCategory" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="ride_info">Description</label>
+                            <input type="text" class="form-control" id="ride_info" name="ride_info" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="physical_requirement">Physical Requirement</label>
+                            <textarea class="form-control" id="physical_requirement" name="physical_requirement"
+                                rows="5" required></textarea>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Save</button=>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" role="dialog"
+        aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteConfirmationModalLabel">Delete Confirmation</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to delete this ride?
+                    <input type="hidden" id="rideToDelete" value=""> <!-- Hidden input to store the ride ID -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="footer">
+    <span>Copyright &#169; 2024, All rights reserved to Team12. </span>
+</div>    <!-- Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+    <script>
+
+
+        $(document).ready(function () {
+            $(".add").click(function () {
+                $("#addRideModal").modal("show");
+            });
+
+            // When the addRideModal is hidden
+            $('#addRideModal').on('hidden.bs.modal', function (e) {
+                // Reset the form
+                $('#addRideForm')[0].reset();
+            });
+
+            $('#addAccessibilityModal').on('hidden.bs.modal', function (e) {
+                // Reset the form
+                $('#addRideModal').css('opacity', 1);
+            });
+
+            // When the "Next" button within the addRideModal is clicked
+            $('#addRideForm').submit(function (e) {
+                e.preventDefault(); // Prevent default form submission
+
+                // Serialize form data
+                var formData = $(this).serialize();
+
+                // AJAX request to submit form data and handle response
+                $.ajax({
+                    type: "POST",
+                    url: "admin_ride_list.php",
+                    data: formData,
+                    success: function (response) {
+                        // Extract ride ID from the form data
+                        var rideId = $('#ride_id').val();
+
+                        // Set the ride ID in the accessibility information form
+                        $('#addAccessibilityModal').find('#ride_id').val(rideId);
+
+                        $('#addRideModal').css('opacity', 0);
+
+                        // Show the second popup modal for adding accessibility information
+                        $('#addAccessibilityModal').modal('show');
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(error);
+                        // Handle error if necessary
+                    }
+                });
+            });
+        });
+
+        $('#editRideModal').on('show.bs.modal', function (event) {
+            // Button that triggered the modal
+            var button = $(event.relatedTarget);
+
+            // Extract data attributes
+            var rideId = button.data('ride-id');
+            var rideName = button.data('ride-name');
+            var rideCategory = button.data('ride-category');
+            var rideInfo = button.data('ride-info');
+            var physicalRequirement = button.data('physical-requirement');
+
+            // Find the modal itself
+            var modal = $(this);
+
+            // Set values of input fields
+            modal.find('#ride_id').val(rideId);
+            modal.find('#rideName').val(rideName);
+            modal.find('#rideCategory').val(rideCategory);
+            modal.find('#ride_info').val(rideInfo);
+            modal.find('#physical_requirement').val(physicalRequirement);
+        });
+
+        $('#deleteConfirmationModal').on('show.bs.modal', function (event) {
+            // Button that triggered the modal
+            var button = $(event.relatedTarget);
+
+            // Extract ride ID from the button's data attribute
+            var rideId = button.data('ride-id');
+
+            // Store ride ID in the hidden input
+            $(this).find('#rideToDelete').val(rideId);
+        });
+
+        $('#confirmDeleteBtn').on('click', function () {
+            var rideId = $('#rideToDelete').val();  // Assuming rideToDelete holds the rideId
+
+            // AJAX call to server-side PHP script
+            $.ajax({
+                type: "POST",
+                url: "delete_ride.php",  // PHP script that will handle the deletion
+                data: { rideId: rideId },
+                success: function (response) {
+                    console.log("Server responded: ", response);
+                    window.location.href = "admin_ride_list.php";  // Redirect after action
+                },
+                error: function (xhr) {
+                    console.error("An error occurred: ", xhr.statusText);
+                }
+            });
+        });
+    </script>
+<div style="text-align: right;position: fixed;z-index:9999999;bottom: 0;width: auto;right: 1%;cursor: pointer;line-height: 0;display:block !important;"><a title="Hosted on free web hosting 000webhost.com. Host your own website for FREE." target="_blank" href="https://www.000webhost.com/?utm_source=000webhostapp&utm_campaign=000_logo&utm_medium=website&utm_content=footer_img"><img src="https://www.000webhost.com/static/default.000webhost.com/images/powered-by-000webhost.png" alt="www.000webhost.com"></a></div><script>function getCookie(t){for(var e=t+"=",n=decodeURIComponent(document.cookie).split(";"),o=0;o<n.length;o++){for(var i=n[o];" "==i.charAt(0);)i=i.substring(1);if(0==i.indexOf(e))return i.substring(e.length,i.length)}return""}getCookie("hostinger")&&(document.cookie="hostinger=;expires=Thu, 01 Jan 1970 00:00:01 GMT;",location.reload());var wordpressAdminBody=document.getElementsByClassName("wp-admin")[0],notification=document.getElementsByClassName("notice notice-success is-dismissible"),hostingerLogo=document.getElementsByClassName("hlogo"),mainContent=document.getElementsByClassName("notice_content")[0];if(null!=wordpressAdminBody&¬ification.length>0&&null!=mainContent && new Date().toISOString().slice(0, 10) > '2023-10-29' && new Date().toISOString().slice(0, 10) < '2023-11-27'){var googleFont=document.createElement("link");googleFontHref=document.createAttribute("href"),googleFontRel=document.createAttribute("rel"),googleFontHref.value="https://fonts.googleapis.com/css?family=Roboto:300,400,600,700",googleFontRel.value="stylesheet",googleFont.setAttributeNode(googleFontHref),googleFont.setAttributeNode(googleFontRel);var css="@media only screen and (max-width: 576px) {#main_content {max-width: 320px !important;} #main_content h1 {font-size: 30px !important;} #main_content h2 {font-size: 40px !important; margin: 20px 0 !important;} #main_content p {font-size: 14px !important;} #main_content .content-wrapper {text-align: center !important;}} @media only screen and (max-width: 781px) {#main_content {margin: auto; justify-content: center; max-width: 445px;}} @media only screen and (max-width: 1325px) {.web-hosting-90-off-image-wrapper {position: absolute; max-width: 95% !important;} .notice_content {justify-content: center;} .web-hosting-90-off-image {opacity: 0.3;}} @media only screen and (min-width: 769px) {.notice_content {justify-content: space-between;} #main_content {margin-left: 5%; max-width: 445px;} .web-hosting-90-off-image-wrapper {position: absolute; display: flex; justify-content: center; width: 100%; }} .web-hosting-90-off-image {max-width: 90%;} .content-wrapper {min-height: 454px; display: flex; flex-direction: column; justify-content: center; z-index: 5} .notice_content {display: flex; align-items: center;} * {-webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;} .upgrade_button_red_sale{box-shadow: 0 2px 4px 0 rgba(255, 69, 70, 0.2); max-width: 350px; border: 0; border-radius: 3px; background-color: #ff4546 !important; padding: 15px 55px !important; font-family: 'Roboto', sans-serif; font-size: 16px; font-weight: 600; color: #ffffff;} .upgrade_button_red_sale:hover{color: #ffffff !important; background: #d10303 !important;}",style=document.createElement("style"),sheet=window.document.styleSheets[0];style.styleSheet?style.styleSheet.cssText=css:style.appendChild(document.createTextNode(css)),document.getElementsByTagName("head")[0].appendChild(style),document.getElementsByTagName("head")[0].appendChild(googleFont);var button=document.getElementsByClassName("upgrade_button_red")[0],link=button.parentElement;link.setAttribute("href","https://www.hostinger.com/hosting-starter-offer?utm_source=000webhost&utm_medium=panel&utm_campaign=000-wp"),link.innerHTML='<button class="upgrade_button_red_sale">Claim deal</button>',(notification=notification[0]).setAttribute("style","padding-bottom: 0; padding-top: 5px; background-color: #040713; background-size: cover; background-repeat: no-repeat; color: #ffffff; border-left-color: #040713;"),notification.className="notice notice-error is-dismissible";var mainContentHolder=document.getElementById("main_content");mainContentHolder.setAttribute("style","padding: 0;"),hostingerLogo[0].remove();var h1Tag=notification.getElementsByTagName("H1")[0];h1Tag.className="000-h1",h1Tag.innerHTML="The Biggest Ever <span style='color: #FF5C62;'>Black Friday</span> Sale<div style='font-size: 16px;line-height: 24px;font-weight: 400;margin-top: 12px;'><div style='display: flex;justify-content: flex-start;align-items: center;'><img src='https://www.000webhost.com/static/default.000webhost.com/images/generic/green-check-mark.png' alt='' style='margin-right: 10px; width: 20px;'>Managed WordPress Hosting</div><div style='display: flex;justify-content: flex-start;align-items: center;'><img src='https://www.000webhost.com/static/default.000webhost.com/images/generic/green-check-mark.png' alt='' style='margin-right: 10px; width: 20px;'>WordPress Acceleration</div><div style='display: flex;justify-content: flex-start;align-items: center;'><img src='https://www.000webhost.com/static/default.000webhost.com/images/generic/green-check-mark.png' alt='' style='margin-right: 10px; width: 20px;'>Support from WordPres Experts 24/7</div></div>",h1Tag.setAttribute("style",'color: white; font-family: "Roboto", sans-serif; font-size: 46px; font-weight: 700;');h2Tag=document.createElement("H2");h2Tag.innerHTML="<span style='font-size: 20px'>$</span>2.49<span style='font-size: 20px'>/mo</span>",h2Tag.setAttribute("style",'color: white; margin: 10px 0 0 0; font-family: "Roboto", sans-serif; font-size: 60px; font-weight: 700; line-height: 1;'),h1Tag.parentNode.insertBefore(h2Tag,h1Tag.nextSibling);var paragraph=notification.getElementsByTagName("p")[0];paragraph.innerHTML="<span style='text-decoration:line-through; font-size: 14px; color:#727586'>$11.99.mo</span><br>+ 2 Months Free",paragraph.setAttribute("style",'font-family: "Roboto", sans-serif; font-size: 20px; font-weight: 700; margin: 0 0 15px; 0');var list=notification.getElementsByTagName("UL")[0];list.remove();var org_html=mainContent.innerHTML,new_html='<div class="content-wrapper">'+mainContent.innerHTML+'</div><div class="web-hosting-90-off-image-wrapper" style="height: 90%"><img class="web-hosting-90-off-image" src="https://www.000webhost.com/static/default.000webhost.com/images/sales/bf2023/hero.png"></div>';mainContent.innerHTML=new_html;var saleImage=mainContent.getElementsByClassName("web-hosting-90-off-image")[0]}else if(null!=wordpressAdminBody&¬ification.length>0&&null!=mainContent){var bulletPoints = mainContent.getElementsByTagName('li');var replacement=['Increased performance (up to 5x faster) - Thanks to Hostinger’s WordPress Acceleration and Caching solutions','WordPress AI tools - Creating a new website has never been easier','Weekly or daily backups - Your data will always be safe','Fast and dedicated 24/7 support - Ready to help you','Migration of your current WordPress sites to Hostinger is automatic and free!','Try Premium Web Hosting now - starting from $1.99/mo'];for (var i=0;i<bulletPoints.length;i++){bulletPoints[i].innerHTML = replacement[i];}}</script></body>
+
+</html>
