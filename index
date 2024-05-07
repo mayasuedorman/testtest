@@ -1,41 +1,39 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ride List</title>
-    <link rel="icon" href="images/logo.png">
-    <link rel="stylesheet" href="styles/style.css">
-    <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <!-- Font Awesome CSS for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <!-- jQuery UI CSS for draggable modals -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <style>
+        body { padding: 20px; }
+        .modal-content { padding: 20px; }
+        .table { margin-top: 20px; }
+    </style>
 </head>
-
 <body>
+    <h1>Ride List</h1>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addRideModal">Add Ride</button>
+    <table id="ridesTable" class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Park</th>
+                <th scope="col">Number</th>
+                <th scope="col">Name</th>
+                <th scope="col">Category</th>
+                <th scope="col">Description</th>
+                <th scope="col">Physical Requirement</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+    </table>
 
-        <table id="ridesTable" class="table table-striped">
-            <!-- Table Header -->
-            <thead>
-                <tr>
-                    <th scope="col">Park</th>
-                    <th scope="col">Number</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Category</th>
-                    <th scope="col">Description</th>
-                    <th scope="col">Physical Requirement</th>
-                    <th scope="col">Actions</th>
-                </tr>
-            </thead>
-          
-
-   
     <!-- Add Ride Modal -->
-    <div class="modal fade" id="addRideModal" tabindex="-1" role="dialog" aria-labelledby="addRideModalLabel"
-        aria-hidden="true">
-        <!-- Modal content for adding a ride goes here -->
-        <div class="modal-dialog draggable" role="document">
+    <div class="modal fade" id="addRideModal" tabindex="-1" role="dialog" aria-labelledby="addRideModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="addRideModalLabel">Add Ride</h5>
@@ -45,266 +43,21 @@
                 </div>
                 <div class="modal-body">
                     <form id="addRideForm" method="post">
-                        <div class="form-group">
-                            <label for="ride_id">Ride Number</label>
-                            <input type="number" class="form-control" id="ride_id" name="ride_id" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="rideName">Ride Name</label>
-                            <input type="text" class="form-control" id="rideName" name="rideName" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="rideCategory">Category</label>
-                            <input type="text" class="form-control" id="rideCategory" name="rideCategory" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="ride_info">Description</label>
-                            <input type="text" class="form-control" id="ride_info" name="ride_info" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="physical_requirement">Physical Requirement</label>
-                            <textarea class="form-control" id="physical_requirement" name="physical_requirement"
-                                rows="5" required></textarea>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-                            <button type="submit" class="btn btn-primary">Next</button>
-                        </div>
+                        <!-- Form content -->
                     </form>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Accessibility Information Modal -->
-    <div class="modal fade" id="addAccessibilityModal" tabindex="-1" role="dialog"
-        aria-labelledby="addAccessibilityModalLabel" aria-hidden="true">
-        <div class="modal-dialog draggable" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="addAccessibilityModalLabel">Add Accessibility</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form id="addAccessibilityForm" method="post">
-                        <div class="form-group">
-                            <label for="touch">Touch</label>
-                            <input type="number" class="form-control" id="touch" name="touch" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="taste">Taste</label>
-                            <input type="number" class="form-control" id="taste" name="taste" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="touch">Smell</label>
-                            <input type="number" class="form-control" id="smell" name="smell" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="sight">Sight</label>
-                            <input type="number" class="form-control" id="sight" name="sight" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="sound">Sound</label>
-                            <input type="number" class="form-control" id="sound" name="sound" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="pregnancy">Pregnancy</label>
-                            <select class="form-control" id="pregnancy" name="pregnancy">
-                                <option value="1">Yes</option>
-                                <option value="0">No</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="motion">Motion Sickness</label>
-                            <select class="form-control" id="motion" name="motion">
-                                <option value="1">Yes</option>
-                                <option value="0" selected>No</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="arms">Arms</label>
-                            <select class="form-control" id="arms" name="arms">
-                                <option value="0">0</option>
-                                <option value="1">1</option>
-                                <option value="2" selected>2</option> <!-- Default selected -->
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="legs">Legs</label>
-                            <select class="form-control" id="legs" name="legs">
-                                <option value="0">0</option>
-                                <option value="1">1</option>
-                                <option value="2" selected>2</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="blood_pressure">High Blood Pressure</label>
-                            <select class="form-control" id="blood_pressure" name="blood_pressure">
-                                <option value="1">Yes</option>
-                                <option value="0" selected>No</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="flashing_light">Flashing Light</label>
-                            <select class="form-control" id="flashing_light" name="flashing_light">
-                                <option value="1">Yes</option>
-                                <option value="0" selected>No</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="loud_noises">Loud Noises</label>
-                            <select class="form-control" id="loud_noises" name="loud_noises">
-                                <option value="1">Yes</option>
-                                <option value="0" selected>No</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="intense_visual">Intense Visual</label>
-                            <select class="form-control" id="intense_visual" name="intense_visual">
-                                <option value="1">Yes</option>
-                                <option value="0" selected>No</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="wheelchair">Wheelchair</label>
-                            <select class="form-control" id="wheelchair" name="wheelchair">
-                                <option value="1">Yes</option>
-                                <option value="0" selected>No</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="heart_disease">Heart Disease</label>
-                            <select class="form-control" id="heart_disease" name="heart_disease">
-                                <option value="1">Yes</option>
-                                <option value="0" selected>No</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="intensity">Intensity</label>
-                            <input type="text" class="form-control" id="intensity" name="intensity" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="max_weight">Maximum Weight (in lbs)</label>
-                            <input type="text" class="form-control" id="max_weight" name="max_weight" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="min_weight">Minimum Weight (in lbs)</label>
-                            <input type="number" class="form-control" id="min_weight" name="min_weight" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="max_height">Maximum Height (in inches)</label>
-                            <input type="number" class="form-control" id="max_height" name="max_height" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="min_height">Minumum Height (in inches)</label>
-                            <input type="number" class="form-control" id="min_height" name="min_height" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="visual">Vision Required</label>
-                            <select class="form-control" id="visual" name="visual">
-                                <option value="1">Yes</option>
-                                <option value="0" selected>No</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="hearing">Hearing Required</label>
-                            <select class="form-control" id="hearing" name="hearing">
-                                <option value="1">Yes</option>
-                                <option value="0" selected>No</option>
-                            </select>
-                        </div>
-                        <input type="hidden" id="ride_id" name="ride_id">
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger showFirstModal" data-dismiss="modal">Cancel</button>
-                    <button type="submit" form="addAccessibilityForm" class="btn btn-primary showFirstModal">Add
-                        Accessibility</button>
-                </div>
-            </div>
-        </div>
-    </div>
+    <!-- Other modals should be added here similarly -->
 
-
-    <!-- Edit Ride Modal -->
-    <div class="modal fade" id="editRideModal" tabindex="-1" role="dialog" aria-labelledby="editRideModalLabel"
-        aria-hidden="true">
-        <!-- Modal content for editing a ride goes here -->
-        <div class="modal-dialog draggable" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="editRideModalLabel">Edit Ride Information</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form action="editRide.php" method="post">
-                        <div class="form-group">
-
-                            <label for="ride_id">Ride Number</label>
-                            <input type="number" class="form-control" id="ride_id" name="ride_id" readonly>
-                        </div>
-                        <div class="form-group">
-                            <label for="rideName">Ride Name</label>
-                            <input type="text" class="form-control" id="rideName" name="rideName" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="rideCategory">Category</label>
-                            <input type="text" class="form-control" id="rideCategory" name="rideCategory" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="ride_info">Description</label>
-                            <input type="text" class="form-control" id="ride_info" name="ride_info" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="physical_requirement">Physical Requirement</label>
-                            <textarea class="form-control" id="physical_requirement" name="physical_requirement"
-                                rows="5" required></textarea>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-                            <button type="submit" class="btn btn-primary">Save</button=>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-    </div>
-
-    <!-- Delete Confirmation Modal -->
-    <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" role="dialog"
-        aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="deleteConfirmationModalLabel">Delete Confirmation</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    Are you sure you want to delete this ride?
-                    <input type="hidden" id="rideToDelete" value=""> <!-- Hidden input to store the ride ID -->
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Delete</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-
+    <script>
+        // Additional JavaScript for functionality
+    </script>
 </body>
-
 </html>
 
- 
                     
                     
                            
