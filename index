@@ -14,14 +14,245 @@
 </head>
 
 <body>
-    <!-- Link to main stylesheet -->
-<link rel="stylesheet" href="styles/style.css?v=1715045164">
+    <?php
+    include 'admin_navbar.php';
+    if (!isset($_SESSION['user_name'])) {
+        header('location: admin_login.php');
+    }
+    include 'connection.php';
 
-<nav class="navbar navbar-light bg-light justify-content-between">
-    <a class="navbar-brand">
-        <img src="images/logo.png" width="40" height="40" alt="logo">
-    </a>
-    </nav>    <div class="ride-table-container">
+    class DatabaseHandler
+    {
+        private $mysqli;
+
+        public function __construct($conn)
+        {
+            $this->mysqli = $conn;
+        }
+
+        public function getTotalRows()
+        {
+            // Fetch total rows from the Ride table
+            $countSql = "SELECT COUNT(*) AS totalRows FROM Ride";
+            $countStmt = $this->mysqli->prepare($countSql);
+            $countStmt->execute();
+            $countResult = $countStmt->get_result();
+            $row = $countResult->fetch_assoc();
+            return $row['totalRows'];
+        }
+
+        public function getRidesData($currentPage, $rowsPerPage)
+        {
+            // Fetch ride data for the current page
+            $offset = ($currentPage - 1) * $rowsPerPage;
+            $sql = "SELECT * FROM Ride LIMIT ?, ?";
+            $stmt = $this->mysqli->prepare($sql);
+            $stmt->bind_param("ii", $offset, $rowsPerPage);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            return $result;
+        }
+
+        public function addRide($rideId, $rideName, $rideCategory, $rideInfo, $physicalRequirement)
+        {
+            // Insert a new ride into the Ride table
+            $sql = "INSERT INTO ride (ride_id, ride_name, ride_category, ride_info, physical_requirement) VALUES (?, ?, ?, ?, ?)";
+            $stmt = $this->mysqli->prepare($sql);
+            $stmt->bind_param("issss", $rideId, $rideName, $rideCategory, $rideInfo, $physicalRequirement);
+            $stmt->execute();
+            $stmt->close();
+        }
+
+        public function addAccessibilityInformation(
+            $rideId,
+            $sight,
+            $smell,
+            $sound,
+            $taste,
+            $touch,
+            $pregnancy,
+            $motion,
+            $arms,
+            $legs,
+            $blood_pressure,
+            $flashing_light,
+            $loud_noises,
+            $intense_visual,
+            $heart_disease,
+            $wheelchair,
+            $intensity,
+            $max_weight,
+            $min_weight,
+            $max_height,
+            $min_height,
+            $visual,
+            $hearing
+        ) {
+
+
+            // Insert accessibility information into the accessibility_information table
+            $sql = "INSERT INTO accessibility_information (ride_id, sight, smell, sound, taste, touch, pregnancy, motion_sickness, hands, legs,
+            blood_pressure, flashing_light, loud_noises, intense_visual, heart_disease, wheelchair, intensity, max_weight, min_weight, max_height, min_height, visual, hearing ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            $stmt = $this->mysqli->prepare($sql);
+            $stmt->bind_param(
+                "iiiiiiiiiiiiiiiisiiiiii",
+                $rideId,
+                $sight,
+                $smell,
+                $sound,
+                $taste,
+                $touch,
+                $pregnancy,
+                $motion,
+                $arms,
+                $legs,
+                $blood_pressure,
+                $flashing_light,
+                $loud_noises,
+                $intense_visual,
+                $heart_disease,
+                $wheelchair,
+                $intensity,
+                $max_weight,
+                $min_weight,
+                $max_height,
+                $min_height,
+                $visual,
+                $hearing
+            );
+            $stmt->execute();
+            $stmt->close();
+        }
+        public function closeConnection()
+        {
+            // Close the database connection
+            $this->mysqli->close();
+        }
+    }
+
+    // Instantiate the DatabaseHandler class
+    $databaseHandler = new DatabaseHandler($conn);
+
+
+    // Handle form submission for adding ride
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        // Check if form fields are set for adding a ride
+        if (isset($_POST["ride_id"]) && isset($_POST["rideName"]) && isset($_POST["rideCategory"]) && isset($_POST["ride_info"]) && isset($_POST["physical_requirement"])) {
+            // Get form data for adding a ride
+            $rideId = $_POST["ride_id"];
+            $rideName = $_POST["rideName"];
+            $rideCategory = $_POST["rideCategory"];
+            $rideInfo = $_POST["ride_info"];
+            $physicalRequirement = $_POST["physical_requirement"];
+
+            // Add ride to the database
+            $databaseHandler->addRide($rideId, $rideName, $rideCategory, $rideInfo, $physicalRequirement);
+
+            // Show the second popup modal for adding accessibility information
+            echo "<script>$('#addAccessibilityModal').modal('show');</script>";
+        }
+
+        // Check if form fields are set for adding accessibility information
+        if (
+            isset($_POST["ride_id"]) &&
+            isset($_POST["touch"]) &&
+            isset($_POST["taste"]) &&
+            isset($_POST["smell"]) &&
+            isset($_POST["sight"]) &&
+            isset($_POST["sound"]) &&
+            isset($_POST["pregnancy"]) &&
+            isset($_POST["motion"]) &&
+            isset($_POST["arms"]) &&
+            isset($_POST["legs"]) &&
+            isset($_POST["blood_pressure"]) &&
+            isset($_POST["flashing_light"]) &&
+            isset($_POST["loud_noises"]) &&
+            isset($_POST["intense_visual"]) &&
+            isset($_POST["heart_disease"]) &&
+            isset($_POST["wheelchair"]) &&
+            isset($_POST["intensity"]) &&
+            isset($_POST["max_weight"]) &&
+            isset($_POST["min_weight"]) &&
+            isset($_POST["max_height"]) &&
+            isset($_POST["min_height"]) &&
+            isset($_POST["visual"]) &&
+            isset($_POST["hearing"])
+        ) {
+            // Get form data for adding accessibility information
+            $rideId = $_POST["ride_id"];
+            $touch = $_POST["touch"];
+            $taste = $_POST["taste"];
+            $smell = $_POST["smell"];
+            $sight = $_POST["sight"];
+            $sound = $_POST["sound"];
+            $pregnancy = ($_POST["pregnancy"] == '1') ? 1 : 0;
+            $motion = ($_POST["motion"] == '1') ? 1 : 0;
+            $arms = $_POST["arms"];
+            $legs = $_POST["legs"];
+            $blood_pressure = ($_POST["blood_pressure"] == '1') ? 1 : 0;
+            $flashing_light = ($_POST["flashing_light"] == '1') ? 1 : 0;
+            $loud_noises = ($_POST["loud_noises"] == '1') ? 1 : 0;
+            $intense_visual = ($_POST["intense_visual"] == '1') ? 1 : 0;
+            $wheelchair = ($_POST["wheelchair"] == '1') ? 1 : 0;
+            $heart_disease = ($_POST["heart_disease"] == '1') ? 1 : 0;
+            $intensity = $_POST["intensity"];
+            $max_weight = $_POST["max_weight"];
+            $min_weight = $_POST["min_weight"];
+            $max_height = $_POST["max_height"];
+            $min_height = $_POST["min_height"];
+            $visual = $_POST["visual"];
+            $hearing = $_POST["hearing"];
+
+            // Add accessibility information to the database
+            $databaseHandler->addAccessibilityInformation(
+                $rideId,
+                $sight,
+                $smell,
+                $sound,
+                $taste,
+                $touch,
+                $pregnancy,
+                $motion,
+                $arms,
+                $legs,
+                $blood_pressure,
+                $flashing_light,
+                $loud_noises,
+                $intense_visual,
+                $wheelchair,
+                $heart_disease,
+                $intensity,
+                $max_weight,
+                $min_weight,
+                $max_height,
+                $min_height,
+                $visual,
+                $hearing
+            );
+        }
+        $_SESSION['complete'] = "New Ride Added.";
+    }
+
+    // Determine current page and rows per page
+    $currentPage = $_GET['page'] ?? 1;
+    $rowsPerPage = $_GET['rows'] ?? 10;
+
+    // Fetch total rows
+    $totalRows = $databaseHandler->getTotalRows();
+
+    // Fetch rides data
+    $result = $databaseHandler->getRidesData($currentPage, $rowsPerPage);
+
+    // Close database connection
+    $databaseHandler->closeConnection();
+    if (isset($_SESSION['complete'])) {
+        echo '<strong><p class="text-success text-center mt-4">' . $_SESSION['complete'] . '</p></strong>';
+    }
+    if (isset($_SESSION['delete'])) {
+        echo '<strong><p class="text-danger text-center mt-4">' . $_SESSION['delete'] . '</p></strong>';
+    }
+    ?>
+    <div class="ride-table-container">
         <div class="d-flex justify-content-between align-items-center my-3">
             <h1 class="col">Ride Lists</h1>
             <button class="btn btn-primary add">Add Ride</button>
@@ -42,61 +273,41 @@
             </thead>
             <tbody>
                 <!-- Table Body -->
-                <tr><td>1</td><td>101</td><td>Silver Star Carousel</td><td>Family</td><td>Low speed antique Carousel</td><td>Do not ride if you have any of the following conditions: recent surgery or illness, heart conditions, neck, back, or bone ailments, pregnancy, high blood pressure or aneurysms, or are under the influence of drugs or alcohol. All riders must be able to sit properly (facing forward, sitting upright, flat in the seat with their hands and legs inside the ride), use all restraining devices, and stabilize themselves throughout the entire ride cycle in order to ride. Expectant mothers and lap childrenar e only permitted when riding in a chariot.</td><td>
+                <?php
+                if ($result->num_rows > 0) {
+                    while ($row = $result->fetch_assoc()) {
+                        echo "<tr>";
+                        echo "<td>1</td>";
+                        echo "<td>" . $row["ride_id"] . "</td>";
+                        echo "<td>" . $row["ride_name"] . "</td>";
+                        echo "<td>" . $row["ride_category"] . "</td>";
+                        echo "<td>" . $row["ride_info"] . "</td>";
+                        echo "<td>" . $row["physical_requirement"] . "</td>";
+                        // Actions column with icons
+                        echo "<td>
                         <div class='d-flex'>
-                        <a href='#editRideModal' class='btn btn-primary mr-2 edit-btn' data-toggle='modal' data-ride-id='101' data-ride-name='Silver Star Carousel' data-ride-category='Family' data-ride-info='Low speed antique Carousel' data-physical-requirement='Do not ride if you have any of the following conditions: recent surgery or illness, heart conditions, neck, back, or bone ailments, pregnancy, high blood pressure or aneurysms, or are under the influence of drugs or alcohol. All riders must be able to sit properly (facing forward, sitting upright, flat in the seat with their hands and legs inside the ride), use all restraining devices, and stabilize themselves throughout the entire ride cycle in order to ride. Expectant mothers and lap childrenar e only permitted when riding in a chariot.'><i class='fas fa-edit'></i></a>
-                        <a href='#deleteConfirmationModal' class='btn btn-danger delete-btn' data-toggle='modal' data-ride-id='101'><i class='fas fa-trash'></i></a>
+                        <a href='#editRideModal' class='btn btn-primary mr-2 edit-btn' data-toggle='modal' data-ride-id='" . $row["ride_id"] . "' data-ride-name='" . $row["ride_name"] . "' data-ride-category='" . $row["ride_category"] . "' data-ride-info='" . $row["ride_info"] . "' data-physical-requirement='" . $row["physical_requirement"] . "'><i class='fas fa-edit'></i></a>
+                        <a href='#deleteConfirmationModal' class='btn btn-danger delete-btn' data-toggle='modal' data-ride-id='" . $row["ride_id"] . "'><i class='fas fa-trash'></i></a>
                         </div>
-                    </td><tr><td>1</td><td>113</td><td>La Vibora</td><td>Thrill</td><td>Olympic bobsled simulation with medium side to side motion and mild up & down hills.</td><td>Do not ride if you have any of the following conditions: recent surgery or illness, heart conditions, neck, back, or bone ailments, pregnancy, high blood pressure or aneurysms, or are under the influence of drugs or alcohol. All passenger restraints, including lap bars and seat belts, must be fastened properly to allow guest to ride. Due to the restraints some large guests may not be able to ride. Riders with arm casts must be seated with the cast toward the outside of the ride. All riders must be able to sit properly (facing forward, sitting upright, flat in the seat with their hands and legs inside the ride), use all restraining devices, and stabilize themselves throughout the entire ride cycle in order to ride.</td><td>
-                        <div class='d-flex'>
-                        <a href='#editRideModal' class='btn btn-primary mr-2 edit-btn' data-toggle='modal' data-ride-id='113' data-ride-name='La Vibora' data-ride-category='Thrill' data-ride-info='Olympic bobsled simulation with medium side to side motion and mild up & down hills.' data-physical-requirement='Do not ride if you have any of the following conditions: recent surgery or illness, heart conditions, neck, back, or bone ailments, pregnancy, high blood pressure or aneurysms, or are under the influence of drugs or alcohol. All passenger restraints, including lap bars and seat belts, must be fastened properly to allow guest to ride. Due to the restraints some large guests may not be able to ride. Riders with arm casts must be seated with the cast toward the outside of the ride. All riders must be able to sit properly (facing forward, sitting upright, flat in the seat with their hands and legs inside the ride), use all restraining devices, and stabilize themselves throughout the entire ride cycle in order to ride.'><i class='fas fa-edit'></i></a>
-                        <a href='#deleteConfirmationModal' class='btn btn-danger delete-btn' data-toggle='modal' data-ride-id='113'><i class='fas fa-trash'></i></a>
-                        </div>
-                    </td><tr><td>1</td><td>225</td><td>Six Flags Railroad</td><td>Family</td><td>Slow moving, sit down visual tour of the park.</td><td>Do not ride if you have any of the following conditions: recent surgery or illness, heart conditions, neck, back, or bone ailments, pregnancy, high blood pressure or aneurysms, or are under the influence of drugs or alcohol. All riders must be able to sit properly (facing forward, sitting upright, flat in the seat with their hands and legs inside the ride), use all restraining devices, and stabilize themselves throughout the entire ride cycle in order to ride.</td><td>
-                        <div class='d-flex'>
-                        <a href='#editRideModal' class='btn btn-primary mr-2 edit-btn' data-toggle='modal' data-ride-id='225' data-ride-name='Six Flags Railroad' data-ride-category='Family' data-ride-info='Slow moving, sit down visual tour of the park.' data-physical-requirement='Do not ride if you have any of the following conditions: recent surgery or illness, heart conditions, neck, back, or bone ailments, pregnancy, high blood pressure or aneurysms, or are under the influence of drugs or alcohol. All riders must be able to sit properly (facing forward, sitting upright, flat in the seat with their hands and legs inside the ride), use all restraining devices, and stabilize themselves throughout the entire ride cycle in order to ride.'><i class='fas fa-edit'></i></a>
-                        <a href='#deleteConfirmationModal' class='btn btn-danger delete-btn' data-toggle='modal' data-ride-id='225'><i class='fas fa-trash'></i></a>
-                        </div>
-                    </td><tr><td>1</td><td>230</td><td>Titan</td><td>Thrill</td><td>An exciting roller coaster with high speeds, steep drops, and fast turns.</td><td>Do not ride if you have any of the following conditions: recent surgery or illness, heart conditions, neck, back, or bone ailments, pregnancy, high blood pressure or aneurysms, or are under the influence of drugs or alcohol. All passenger restraints, including lap bars and seat belts, must be fastened properly to allow guest to ride. There may not be more than a 4¼ inch gap between the lap bar and the side of the car.  Due to the restraints some large guests may not be able to ride. Riders with arm casts must be seated with the cast toward the outside of the ride. All riders must be able to sit properly (facing forward, sitting upright, flat in the seat with their hands and legs inside the ride), use all restraining devices, and stabilize themselves throughout the entire ride cycle in order to ride.</td><td>
-                        <div class='d-flex'>
-                        <a href='#editRideModal' class='btn btn-primary mr-2 edit-btn' data-toggle='modal' data-ride-id='230' data-ride-name='Titan' data-ride-category='Thrill' data-ride-info='An exciting roller coaster with high speeds, steep drops, and fast turns.' data-physical-requirement='Do not ride if you have any of the following conditions: recent surgery or illness, heart conditions, neck, back, or bone ailments, pregnancy, high blood pressure or aneurysms, or are under the influence of drugs or alcohol. All passenger restraints, including lap bars and seat belts, must be fastened properly to allow guest to ride. There may not be more than a 4¼ inch gap between the lap bar and the side of the car.  Due to the restraints some large guests may not be able to ride. Riders with arm casts must be seated with the cast toward the outside of the ride. All riders must be able to sit properly (facing forward, sitting upright, flat in the seat with their hands and legs inside the ride), use all restraining devices, and stabilize themselves throughout the entire ride cycle in order to ride.'><i class='fas fa-edit'></i></a>
-                        <a href='#deleteConfirmationModal' class='btn btn-danger delete-btn' data-toggle='modal' data-ride-id='230'><i class='fas fa-trash'></i></a>
-                        </div>
-                    </td><tr><td>1</td><td>306</td><td>Six Flags Speedway (Go Karts)</td><td>Family</td><td>Racecar simulation. Heavy side to side forces, minor bumping</td><td>Drivers must exhibit sufficient visual acuity to operate the car safely. Drivers and passengers must maintain an upright seated position with their back against the seatback at all times during the ride durations. hands, hands, legs, and feet must remain inside the go kart at all times. Drivers and passengers must have the ability to step up and down into the ride vehicle or have the ability to transfer from a wheelchair to the go kart.</td><td>
-                        <div class='d-flex'>
-                        <a href='#editRideModal' class='btn btn-primary mr-2 edit-btn' data-toggle='modal' data-ride-id='306' data-ride-name='Six Flags Speedway (Go Karts)' data-ride-category='Family' data-ride-info='Racecar simulation. Heavy side to side forces, minor bumping' data-physical-requirement='Drivers must exhibit sufficient visual acuity to operate the car safely. Drivers and passengers must maintain an upright seated position with their back against the seatback at all times during the ride durations. hands, hands, legs, and feet must remain inside the go kart at all times. Drivers and passengers must have the ability to step up and down into the ride vehicle or have the ability to transfer from a wheelchair to the go kart.'><i class='fas fa-edit'></i></a>
-                        <a href='#deleteConfirmationModal' class='btn btn-danger delete-btn' data-toggle='modal' data-ride-id='306'><i class='fas fa-trash'></i></a>
-                        </div>
-                    </td><tr><td>1</td><td>307</td><td>Shock Wave</td><td>Thrill</td><td>An exciting roller coaster with high speeds, steep drops, fast turns,and loops.</td><td>Do not ride if you have any of the following conditions: recent surgery or illness, heart conditions, neck, back, or bone ailments, pregnancy, high blood pressure or aneurysms, or are under the influence of drugs or alcohol. All passenger restraints, including lap bars and seat belts, must be fastened properly to allow guest to ride. Due to the restraints some large guests may not be able to ride. Riders with arm casts must be seated with the cast toward the outside of the ride. All riders must be able to sit properly (facing forward, sitting upright, flat in the seat with their hands and legs inside the ride), use all restraining devices, and stabilize themselves throughout the entire ride cycle in order to ride.</td><td>
-                        <div class='d-flex'>
-                        <a href='#editRideModal' class='btn btn-primary mr-2 edit-btn' data-toggle='modal' data-ride-id='307' data-ride-name='Shock Wave' data-ride-category='Thrill' data-ride-info='An exciting roller coaster with high speeds, steep drops, fast turns,and loops.' data-physical-requirement='Do not ride if you have any of the following conditions: recent surgery or illness, heart conditions, neck, back, or bone ailments, pregnancy, high blood pressure or aneurysms, or are under the influence of drugs or alcohol. All passenger restraints, including lap bars and seat belts, must be fastened properly to allow guest to ride. Due to the restraints some large guests may not be able to ride. Riders with arm casts must be seated with the cast toward the outside of the ride. All riders must be able to sit properly (facing forward, sitting upright, flat in the seat with their hands and legs inside the ride), use all restraining devices, and stabilize themselves throughout the entire ride cycle in order to ride.'><i class='fas fa-edit'></i></a>
-                        <a href='#deleteConfirmationModal' class='btn btn-danger delete-btn' data-toggle='modal' data-ride-id='307'><i class='fas fa-trash'></i></a>
-                        </div>
-                    </td><tr><td>1</td><td>310</td><td>Superman: Tower of Power</td><td>Thrill</td><td>An exciting ride with sudden vertical acceleration and a sudden vertical drop.</td><td>Do not ride if you have any of the following conditions: recent surgery or illness, heart conditions, neck, back, or bone ailments, pregnancy, high blood pressure or aneurysms, or are under the influence of drugs or alcohol. All passenger restraints, including lap bars and seat belts, must be fastened properly to allow guest to ride. Due to the restraints some large guests may not be able to ride. Riders with arm casts must be seated with the cast toward the outside of the ride. All riders must be able to sit properly (facing forward, sitting upright, flat in the seat with their hands and legs inside the ride), use all restraining devices, and stabilize themselves throughout the entire ride cycle in order to ride.</td><td>
-                        <div class='d-flex'>
-                        <a href='#editRideModal' class='btn btn-primary mr-2 edit-btn' data-toggle='modal' data-ride-id='310' data-ride-name='Superman: Tower of Power' data-ride-category='Thrill' data-ride-info='An exciting ride with sudden vertical acceleration and a sudden vertical drop.' data-physical-requirement='Do not ride if you have any of the following conditions: recent surgery or illness, heart conditions, neck, back, or bone ailments, pregnancy, high blood pressure or aneurysms, or are under the influence of drugs or alcohol. All passenger restraints, including lap bars and seat belts, must be fastened properly to allow guest to ride. Due to the restraints some large guests may not be able to ride. Riders with arm casts must be seated with the cast toward the outside of the ride. All riders must be able to sit properly (facing forward, sitting upright, flat in the seat with their hands and legs inside the ride), use all restraining devices, and stabilize themselves throughout the entire ride cycle in order to ride.'><i class='fas fa-edit'></i></a>
-                        <a href='#deleteConfirmationModal' class='btn btn-danger delete-btn' data-toggle='modal' data-ride-id='310'><i class='fas fa-trash'></i></a>
-                        </div>
-                    </td><tr><td>1</td><td>415</td><td>Bugs Bunny Cloud Bouncer</td><td>Kids</td><td>A child"s ride with elevation and short drops.</td><td>Do not ride if you have any of the following conditions: recent surgery or illness, heart conditions, neck, back, or bone ailments, pregnancy, high blood pressure or aneurysms, or are under the influence of drugs or alcohol. All passenger restraints, including lap bars and seat belts, must be fastened properly to allow guest to ride. No leg casts. Due to the restraints some large guests may not be able to ride. Riders with arm casts must be seated with the cast toward the outside of the ride. All riders must be able to sit properly (facing forward, sitting upright, flat in the seat with their hands and legs inside the ride), use all restraining devices, and stabilize themselves throughout the entire ride cycle in order to ride.</td><td>
-                        <div class='d-flex'>
-                        <a href='#editRideModal' class='btn btn-primary mr-2 edit-btn' data-toggle='modal' data-ride-id='415' data-ride-name='Bugs Bunny Cloud Bouncer' data-ride-category='Kids' data-ride-info='A child"s ride with elevation and short drops.' data-physical-requirement='Do not ride if you have any of the following conditions: recent surgery or illness, heart conditions, neck, back, or bone ailments, pregnancy, high blood pressure or aneurysms, or are under the influence of drugs or alcohol. All passenger restraints, including lap bars and seat belts, must be fastened properly to allow guest to ride. No leg casts. Due to the restraints some large guests may not be able to ride. Riders with arm casts must be seated with the cast toward the outside of the ride. All riders must be able to sit properly (facing forward, sitting upright, flat in the seat with their hands and legs inside the ride), use all restraining devices, and stabilize themselves throughout the entire ride cycle in order to ride.'><i class='fas fa-edit'></i></a>
-                        <a href='#deleteConfirmationModal' class='btn btn-danger delete-btn' data-toggle='modal' data-ride-id='415'><i class='fas fa-trash'></i></a>
-                        </div>
-                    </td><tr><td>1</td><td>416</td><td>Taz Tornado Swings</td><td>Kids</td><td>A gentle circular ride.</td><td>Do not ride if you have any of the following conditions: recent surgery or illness, heart conditions, neck, back, or bone ailments, pregnancy, high blood pressure or aneurysms, or are under the influence of drugs or alcohol. Riders with arm casts must be seated with the cast toward the outside of the ride. All riders must be able to sit properly (facing forward, sitting upright, flat in the seat with their hands and legs inside the ride), use all restraining devices, and stabilize themselves throughout the entire ride cycle in order to ride. Lap children are not permitted. 275 pound maximum combined weight per swing.</td><td>
-                        <div class='d-flex'>
-                        <a href='#editRideModal' class='btn btn-primary mr-2 edit-btn' data-toggle='modal' data-ride-id='416' data-ride-name='Taz Tornado Swings' data-ride-category='Kids' data-ride-info='A gentle circular ride.' data-physical-requirement='Do not ride if you have any of the following conditions: recent surgery or illness, heart conditions, neck, back, or bone ailments, pregnancy, high blood pressure or aneurysms, or are under the influence of drugs or alcohol. Riders with arm casts must be seated with the cast toward the outside of the ride. All riders must be able to sit properly (facing forward, sitting upright, flat in the seat with their hands and legs inside the ride), use all restraining devices, and stabilize themselves throughout the entire ride cycle in order to ride. Lap children are not permitted. 275 pound maximum combined weight per swing.'><i class='fas fa-edit'></i></a>
-                        <a href='#deleteConfirmationModal' class='btn btn-danger delete-btn' data-toggle='modal' data-ride-id='416'><i class='fas fa-trash'></i></a>
-                        </div>
-                    </td><tr><td>1</td><td>418</td><td>Justice league Battle for Metropolis</td><td>Thrill</td><td>An interactive dark ride with turns and spins</td><td>Do not ride if you have any of the following conditions: recent surgery or illness, heart conditions, neck, back, or bone ailments, pregnancy, high blood pressure or aneurysms, or are under the influence of drugs or alcohol. Lap seating is not permitted. All passenger restraints, including lap bars and seat belts, must be fastened properly to allow guest to ride. Due to the restraints some large guests may not be able to ride. Riders with arm casts must be seated with the cast toward the outside of the ride. All riders must be able to sit properly (facing forward, sitting upright, flat in the seat with their hands and legs inside the ride), use all restraining devices, and stabilize themselves throughout the entire ride cycle in order to ride. Strobe lights are in use.</td><td>
-                        <div class='d-flex'>
-                        <a href='#editRideModal' class='btn btn-primary mr-2 edit-btn' data-toggle='modal' data-ride-id='418' data-ride-name='Justice league Battle for Metropolis' data-ride-category='Thrill' data-ride-info='An interactive dark ride with turns and spins' data-physical-requirement='Do not ride if you have any of the following conditions: recent surgery or illness, heart conditions, neck, back, or bone ailments, pregnancy, high blood pressure or aneurysms, or are under the influence of drugs or alcohol. Lap seating is not permitted. All passenger restraints, including lap bars and seat belts, must be fastened properly to allow guest to ride. Due to the restraints some large guests may not be able to ride. Riders with arm casts must be seated with the cast toward the outside of the ride. All riders must be able to sit properly (facing forward, sitting upright, flat in the seat with their hands and legs inside the ride), use all restraining devices, and stabilize themselves throughout the entire ride cycle in order to ride. Strobe lights are in use.'><i class='fas fa-edit'></i></a>
-                        <a href='#deleteConfirmationModal' class='btn btn-danger delete-btn' data-toggle='modal' data-ride-id='418'><i class='fas fa-trash'></i></a>
-                        </div>
-                    </td>            </tbody>
+                    </td>";
+
+                    }
+                } else {
+                    echo "<tr><td colspan='7'>No data found</td></tr>";
+                }
+                ?>
+            </tbody>
         </table>
 
         <ul class="pagination justify-content-center">
-            <li class='page-item'><a class='page-link' href='?page=1&rows=10'>1</a></li><li class='page-item'><a class='page-link' href='?page=2&rows=10'>2</a></li>        </ul>
+            <?php
+            // Display pagination links
+            $totalPages = ceil($totalRows / $rowsPerPage);
+            for ($i = 1; $i <= $totalPages; $i++) {
+                echo "<li class='page-item'><a class='page-link' href='?page=$i&rows=$rowsPerPage'>$i</a></li>";
+            }
+            ?>
+        </ul>
     </div>
 
     <!-- Add Ride Modal -->
@@ -367,9 +578,8 @@
     </div>
 
 
-    <div id="footer">
-    <span>Copyright &#169; 2024, All rights reserved to Team12. </span>
-</div>    <!-- Bootstrap JS -->
+    <?php include 'footer.php'; ?>
+    <!-- Bootstrap JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
@@ -477,6 +687,16 @@
             });
         });
     </script>
-<div style="text-align: right;position: fixed;z-index:9999999;bottom: 0;width: auto;right: 1%;cursor: pointer;line-height: 0;display:block !important;"><a title="Hosted on free web hosting 000webhost.com. Host your own website for FREE." target="_blank" href="https://www.000webhost.com/?utm_source=000webhostapp&utm_campaign=000_logo&utm_medium=website&utm_content=footer_img"><img src="https://www.000webhost.com/static/default.000webhost.com/images/powered-by-000webhost.png" alt="www.000webhost.com"></a></div><script>function getCookie(t){for(var e=t+"=",n=decodeURIComponent(document.cookie).split(";"),o=0;o<n.length;o++){for(var i=n[o];" "==i.charAt(0);)i=i.substring(1);if(0==i.indexOf(e))return i.substring(e.length,i.length)}return""}getCookie("hostinger")&&(document.cookie="hostinger=;expires=Thu, 01 Jan 1970 00:00:01 GMT;",location.reload());var wordpressAdminBody=document.getElementsByClassName("wp-admin")[0],notification=document.getElementsByClassName("notice notice-success is-dismissible"),hostingerLogo=document.getElementsByClassName("hlogo"),mainContent=document.getElementsByClassName("notice_content")[0];if(null!=wordpressAdminBody&¬ification.length>0&&null!=mainContent && new Date().toISOString().slice(0, 10) > '2023-10-29' && new Date().toISOString().slice(0, 10) < '2023-11-27'){var googleFont=document.createElement("link");googleFontHref=document.createAttribute("href"),googleFontRel=document.createAttribute("rel"),googleFontHref.value="https://fonts.googleapis.com/css?family=Roboto:300,400,600,700",googleFontRel.value="stylesheet",googleFont.setAttributeNode(googleFontHref),googleFont.setAttributeNode(googleFontRel);var css="@media only screen and (max-width: 576px) {#main_content {max-width: 320px !important;} #main_content h1 {font-size: 30px !important;} #main_content h2 {font-size: 40px !important; margin: 20px 0 !important;} #main_content p {font-size: 14px !important;} #main_content .content-wrapper {text-align: center !important;}} @media only screen and (max-width: 781px) {#main_content {margin: auto; justify-content: center; max-width: 445px;}} @media only screen and (max-width: 1325px) {.web-hosting-90-off-image-wrapper {position: absolute; max-width: 95% !important;} .notice_content {justify-content: center;} .web-hosting-90-off-image {opacity: 0.3;}} @media only screen and (min-width: 769px) {.notice_content {justify-content: space-between;} #main_content {margin-left: 5%; max-width: 445px;} .web-hosting-90-off-image-wrapper {position: absolute; display: flex; justify-content: center; width: 100%; }} .web-hosting-90-off-image {max-width: 90%;} .content-wrapper {min-height: 454px; display: flex; flex-direction: column; justify-content: center; z-index: 5} .notice_content {display: flex; align-items: center;} * {-webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;} .upgrade_button_red_sale{box-shadow: 0 2px 4px 0 rgba(255, 69, 70, 0.2); max-width: 350px; border: 0; border-radius: 3px; background-color: #ff4546 !important; padding: 15px 55px !important; font-family: 'Roboto', sans-serif; font-size: 16px; font-weight: 600; color: #ffffff;} .upgrade_button_red_sale:hover{color: #ffffff !important; background: #d10303 !important;}",style=document.createElement("style"),sheet=window.document.styleSheets[0];style.styleSheet?style.styleSheet.cssText=css:style.appendChild(document.createTextNode(css)),document.getElementsByTagName("head")[0].appendChild(style),document.getElementsByTagName("head")[0].appendChild(googleFont);var button=document.getElementsByClassName("upgrade_button_red")[0],link=button.parentElement;link.setAttribute("href","https://www.hostinger.com/hosting-starter-offer?utm_source=000webhost&utm_medium=panel&utm_campaign=000-wp"),link.innerHTML='<button class="upgrade_button_red_sale">Claim deal</button>',(notification=notification[0]).setAttribute("style","padding-bottom: 0; padding-top: 5px; background-color: #040713; background-size: cover; background-repeat: no-repeat; color: #ffffff; border-left-color: #040713;"),notification.className="notice notice-error is-dismissible";var mainContentHolder=document.getElementById("main_content");mainContentHolder.setAttribute("style","padding: 0;"),hostingerLogo[0].remove();var h1Tag=notification.getElementsByTagName("H1")[0];h1Tag.className="000-h1",h1Tag.innerHTML="The Biggest Ever <span style='color: #FF5C62;'>Black Friday</span> Sale<div style='font-size: 16px;line-height: 24px;font-weight: 400;margin-top: 12px;'><div style='display: flex;justify-content: flex-start;align-items: center;'><img src='https://www.000webhost.com/static/default.000webhost.com/images/generic/green-check-mark.png' alt='' style='margin-right: 10px; width: 20px;'>Managed WordPress Hosting</div><div style='display: flex;justify-content: flex-start;align-items: center;'><img src='https://www.000webhost.com/static/default.000webhost.com/images/generic/green-check-mark.png' alt='' style='margin-right: 10px; width: 20px;'>WordPress Acceleration</div><div style='display: flex;justify-content: flex-start;align-items: center;'><img src='https://www.000webhost.com/static/default.000webhost.com/images/generic/green-check-mark.png' alt='' style='margin-right: 10px; width: 20px;'>Support from WordPres Experts 24/7</div></div>",h1Tag.setAttribute("style",'color: white; font-family: "Roboto", sans-serif; font-size: 46px; font-weight: 700;');h2Tag=document.createElement("H2");h2Tag.innerHTML="<span style='font-size: 20px'>$</span>2.49<span style='font-size: 20px'>/mo</span>",h2Tag.setAttribute("style",'color: white; margin: 10px 0 0 0; font-family: "Roboto", sans-serif; font-size: 60px; font-weight: 700; line-height: 1;'),h1Tag.parentNode.insertBefore(h2Tag,h1Tag.nextSibling);var paragraph=notification.getElementsByTagName("p")[0];paragraph.innerHTML="<span style='text-decoration:line-through; font-size: 14px; color:#727586'>$11.99.mo</span><br>+ 2 Months Free",paragraph.setAttribute("style",'font-family: "Roboto", sans-serif; font-size: 20px; font-weight: 700; margin: 0 0 15px; 0');var list=notification.getElementsByTagName("UL")[0];list.remove();var org_html=mainContent.innerHTML,new_html='<div class="content-wrapper">'+mainContent.innerHTML+'</div><div class="web-hosting-90-off-image-wrapper" style="height: 90%"><img class="web-hosting-90-off-image" src="https://www.000webhost.com/static/default.000webhost.com/images/sales/bf2023/hero.png"></div>';mainContent.innerHTML=new_html;var saleImage=mainContent.getElementsByClassName("web-hosting-90-off-image")[0]}else if(null!=wordpressAdminBody&¬ification.length>0&&null!=mainContent){var bulletPoints = mainContent.getElementsByTagName('li');var replacement=['Increased performance (up to 5x faster) - Thanks to Hostinger’s WordPress Acceleration and Caching solutions','WordPress AI tools - Creating a new website has never been easier','Weekly or daily backups - Your data will always be safe','Fast and dedicated 24/7 support - Ready to help you','Migration of your current WordPress sites to Hostinger is automatic and free!','Try Premium Web Hosting now - starting from $1.99/mo'];for (var i=0;i<bulletPoints.length;i++){bulletPoints[i].innerHTML = replacement[i];}}</script></body>
+</body>
 
 </html>
+
+<?php
+    unset($_SESSION['complete']);
+    unset($_SESSION['delete']);
+?>
+           
+                    
+                    
+                    
+                           
