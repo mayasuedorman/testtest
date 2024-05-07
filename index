@@ -28,45 +28,9 @@
                     <th scope="col">Actions</th>
                 </tr>
             </thead>
-            <tbody>
-                <!-- Table Body -->
-                <?php
-                if ($result->num_rows > 0) {
-                    while ($row = $result->fetch_assoc()) {
-                        echo "<tr>";
-                        echo "<td>1</td>";
-                        echo "<td>" . $row["ride_id"] . "</td>";
-                        echo "<td>" . $row["ride_name"] . "</td>";
-                        echo "<td>" . $row["ride_category"] . "</td>";
-                        echo "<td>" . $row["ride_info"] . "</td>";
-                        echo "<td>" . $row["physical_requirement"] . "</td>";
-                        // Actions column with icons
-                        echo "<td>
-                        <div class='d-flex'>
-                        <a href='#editRideModal' class='btn btn-primary mr-2 edit-btn' data-toggle='modal' data-ride-id='" . $row["ride_id"] . "' data-ride-name='" . $row["ride_name"] . "' data-ride-category='" . $row["ride_category"] . "' data-ride-info='" . $row["ride_info"] . "' data-physical-requirement='" . $row["physical_requirement"] . "'><i class='fas fa-edit'></i></a>
-                        <a href='#deleteConfirmationModal' class='btn btn-danger delete-btn' data-toggle='modal' data-ride-id='" . $row["ride_id"] . "'><i class='fas fa-trash'></i></a>
-                        </div>
-                    </td>";
+          
 
-                    }
-                } else {
-                    echo "<tr><td colspan='7'>No data found</td></tr>";
-                }
-                ?>
-            </tbody>
-        </table>
-
-        <ul class="pagination justify-content-center">
-            <?php
-            // Display pagination links
-            $totalPages = ceil($totalRows / $rowsPerPage);
-            for ($i = 1; $i <= $totalPages; $i++) {
-                echo "<li class='page-item'><a class='page-link' href='?page=$i&rows=$rowsPerPage'>$i</a></li>";
-            }
-            ?>
-        </ul>
-    </div>
-
+   
     <!-- Add Ride Modal -->
     <div class="modal fade" id="addRideModal" tabindex="-1" role="dialog" aria-labelledby="addRideModalLabel"
         aria-hidden="true">
